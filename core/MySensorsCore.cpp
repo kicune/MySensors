@@ -19,6 +19,8 @@
 
 #include "MySensorsCore.h"
 
+extern bool preSleepEval();
+
 // debug output
 #if defined(MY_DEBUG_VERBOSE_CORE)
 #define CORE_DEBUG(x,...)	DEBUG_OUTPUT(x, ##__VA_ARGS__)	//!< debug
@@ -694,6 +696,11 @@ int8_t _sleep(const uint32_t sleepingMS, const bool smartSleep, const uint8_t in
 #else
 	(void)smartSleep;
 #endif // MY_SENSOR_NETWORK
+
+//Add external call to prevent sleep if there are messages to be sent
+if(!preSleepEval()) {
+	return MY_SLEEP_NOT_POSSIBLE;
+}
 
 #if defined(MY_SENSOR_NETWORK)
 	transportDisable();
