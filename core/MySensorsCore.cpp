@@ -631,7 +631,9 @@ int8_t _sleep(const uint32_t sleepingMS, const bool smartSleep, const uint8_t in
               const uint8_t mode1, const uint8_t interrupt2, const uint8_t mode2)
 {
 // FULL_QUEUE_IDX      4
-if(loadState(4) == 1) {
+uint8_t fullQueue = loadState(4);
+CORE_DEBUG(PSTR("Full queue flag: %" PRIu8 "\n"), fullQueue);
+if(fullQueue == 1) {
 	return MY_SLEEP_NOT_POSSIBLE;
 }
 
