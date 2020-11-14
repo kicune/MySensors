@@ -630,13 +630,6 @@ void doYield(void)
 int8_t _sleep(const uint32_t sleepingMS, const bool smartSleep, const uint8_t interrupt1,
               const uint8_t mode1, const uint8_t interrupt2, const uint8_t mode2)
 {
-// FULL_QUEUE_IDX      4
-uint8_t fullQueue = loadState(4);
-CORE_DEBUG(PSTR("Full queue flag: %" PRIu8 "\n"), fullQueue);
-if(fullQueue == 1) {
-	return MY_SLEEP_NOT_POSSIBLE;
-}
-
 	CORE_DEBUG(PSTR("MCO:SLP:MS=%" PRIu32 ",SMS=%" PRIu8 ",I1=%" PRIu8 ",M1=%" PRIu8 ",I2=%" PRIu8
 	                ",M2=%" PRIu8 "\n"), sleepingMS, smartSleep,
 	           interrupt1, mode1, interrupt2, mode2);
@@ -705,6 +698,13 @@ if(fullQueue == 1) {
 #endif // MY_SENSOR_NETWORK
 
 #if defined(MY_SENSOR_NETWORK)
+	// FULL_QUEUE_IDX      4
+	uint8_t fullQueue = loadState(4);
+	CORE_DEBUG(PSTR("Full queue flag: %" PRIu8 "\n"), fullQueue);
+	if(fullQueue == 1) {
+		return MY_SLEEP_NOT_POSSIBLE;
+	}
+
 	transportDisable();
 #endif
 	setIndication(INDICATION_SLEEP);
