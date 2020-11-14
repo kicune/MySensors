@@ -697,8 +697,8 @@ int8_t _sleep(const uint32_t sleepingMS, const bool smartSleep, const uint8_t in
 	(void)smartSleep;
 #endif // MY_SENSOR_NETWORK
 
-//Add external call to prevent sleep if there are messages to be sent
-if(_fullQueue) {
+// FULL_QUEUE_IDX      4
+if(loadState(4) == 1) {
 	return MY_SLEEP_NOT_POSSIBLE;
 }
 

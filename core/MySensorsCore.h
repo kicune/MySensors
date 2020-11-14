@@ -301,9 +301,6 @@ bool wait(const uint32_t waitingMS, const mysensors_command_t cmd, const uint8_t
  */
 void doYield(void);
 
-
-void setFullQueue(bool isFull);
-
 /**
  * Sleep (PowerDownMode) the MCU and radio. Wake up on timer.
  * @param sleepingMS Number of milliseconds to sleep.
