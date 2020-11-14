@@ -19,8 +19,6 @@
 
 #include "MySensorsCore.h"
 
-extern bool preSleepEval();
-
 // debug output
 #if defined(MY_DEBUG_VERBOSE_CORE)
 #define CORE_DEBUG(x,...)	DEBUG_OUTPUT(x, ##__VA_ARGS__)	//!< debug
@@ -31,6 +29,8 @@ extern bool preSleepEval();
 // message buffers
 MyMessage _msg;			// Buffer for incoming messages
 MyMessage _msgTmp;		// Buffer for temporary messages (acks and nonces among others)
+
+bool _fullQueue; // true: outbount queue is full, sleep not possible
 
 // core configuration
 static coreConfig_t _coreConfig;
@@ -698,7 +698,7 @@ int8_t _sleep(const uint32_t sleepingMS, const bool smartSleep, const uint8_t in
 #endif // MY_SENSOR_NETWORK
 
 //Add external call to prevent sleep if there are messages to be sent
-if(!preSleepEval()) {
+if(_fullQueue) {
 	return MY_SLEEP_NOT_POSSIBLE;
 }
 
@@ -780,6 +780,11 @@ int8_t smartSleep(const uint8_t interrupt1, const uint8_t mode1, const uint8_t i
 uint32_t getSleepRemaining(void)
 {
 	return hwGetSleepRemaining();
+}
+
+void setFullQueue(bool isFull) 
+{
+	_fullQueue = isFull;
 }
 
 
