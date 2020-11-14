@@ -701,9 +701,9 @@ int8_t _sleep(const uint32_t sleepingMS, const bool smartSleep, const uint8_t in
 	// FULL_QUEUE_IDX      4
 	uint8_t fullQueue = loadState(4);
 	CORE_DEBUG(PSTR("Full queue flag: %" PRIu8 "\n"), fullQueue);
-	//if(fullQueue == 1) {
-	//	return MY_SLEEP_NOT_POSSIBLE;
-	//}
+	if(fullQueue == 1) {
+		return MY_SLEEP_NOT_POSSIBLE;
+	}
 
 	transportDisable();
 #endif
