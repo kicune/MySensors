@@ -698,9 +698,9 @@ int8_t _sleep(const uint32_t sleepingMS, const bool smartSleep, const uint8_t in
 #endif // MY_SENSOR_NETWORK
 
 #if defined(MY_SENSOR_NETWORK)
-	if(_fullQueue) {
+	/*if(_fullQueue) {
 		return MY_SLEEP_NOT_POSSIBLE;
-	}
+	}*/
 	transportDisable();
 #endif
 	setIndication(INDICATION_SLEEP);
