@@ -630,6 +630,7 @@ void doYield(void)
 int8_t _sleep(const uint32_t sleepingMS, const bool smartSleep, const uint8_t interrupt1,
               const uint8_t mode1, const uint8_t interrupt2, const uint8_t mode2)
 {
+	//DEBUG
 	debugQueuePrint();
 
 	CORE_DEBUG(PSTR("MCO:SLP:MS=%" PRIu32 ",SMS=%" PRIu8 ",I1=%" PRIu8 ",M1=%" PRIu8 ",I2=%" PRIu8
@@ -700,6 +701,9 @@ int8_t _sleep(const uint32_t sleepingMS, const bool smartSleep, const uint8_t in
 #endif // MY_SENSOR_NETWORK
 
 #if defined(MY_SENSOR_NETWORK)
+	//DEBUG
+	debugQueuePrint();
+
 	if(_fullQueue) {
 		return MY_SLEEP_NOT_POSSIBLE;
 	}
