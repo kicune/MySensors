@@ -636,6 +636,11 @@ int8_t _sleep(const uint32_t sleepingMS, const bool smartSleep, const uint8_t in
 	CORE_DEBUG(PSTR("MCO:SLP:MS=%" PRIu32 ",SMS=%" PRIu8 ",I1=%" PRIu8 ",M1=%" PRIu8 ",I2=%" PRIu8
 	                ",M2=%" PRIu8 "\n"), sleepingMS, smartSleep,
 	           interrupt1, mode1, interrupt2, mode2);
+
+	if(_fullQueue) {
+		return MY_SLEEP_NOT_POSSIBLE;
+	}
+				   
 	// repeater feature: sleeping not possible
 #if defined(MY_REPEATER_FEATURE)
 	(void)smartSleep;
@@ -701,12 +706,6 @@ int8_t _sleep(const uint32_t sleepingMS, const bool smartSleep, const uint8_t in
 #endif // MY_SENSOR_NETWORK
 
 #if defined(MY_SENSOR_NETWORK)
-	//DEBUG
-	debugQueuePrint();
-
-	if(_fullQueue) {
-		return MY_SLEEP_NOT_POSSIBLE;
-	}
 	transportDisable();
 #endif
 	setIndication(INDICATION_SLEEP);
