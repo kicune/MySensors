@@ -303,6 +303,8 @@ void doYield(void);
 
 void setFullQueue(bool isQueueFull);
 
+extern void debugQueuePrint();
+
 /**
  * Sleep (PowerDownMode) the MCU and radio. Wake up on timer.
  * @param sleepingMS Number of milliseconds to sleep.
