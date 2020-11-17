@@ -303,7 +303,7 @@ void doYield(void);
 
 void setFullQueue(bool isQueueFull);
 
-extern void debugQueuePrint();
+extern void debugQueuePrint(const char* prefix);
 
 /**
  * Sleep (PowerDownMode) the MCU and radio. Wake up on timer.

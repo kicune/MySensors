@@ -631,13 +631,14 @@ int8_t _sleep(const uint32_t sleepingMS, const bool smartSleep, const uint8_t in
               const uint8_t mode1, const uint8_t interrupt2, const uint8_t mode2)
 {
 	//DEBUG
-	debugQueuePrint();
+	debugQueuePrint("StartSleep");
 
 	CORE_DEBUG(PSTR("MCO:SLP:MS=%" PRIu32 ",SMS=%" PRIu8 ",I1=%" PRIu8 ",M1=%" PRIu8 ",I2=%" PRIu8
 	                ",M2=%" PRIu8 "\n"), sleepingMS, smartSleep,
 	           interrupt1, mode1, interrupt2, mode2);
 
 	if(_fullQueue) {
+		debugQueuePrint("PreReturn");
 		return MY_SLEEP_NOT_POSSIBLE;
 	}
 				   
