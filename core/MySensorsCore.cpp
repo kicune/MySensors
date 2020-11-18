@@ -632,17 +632,6 @@ int8_t _sleep(const uint32_t sleepingMS, const bool smartSleep, const uint8_t in
 {
 	
 	CORE_DEBUG(PSTR("Entering _sleep...\n"));
-	//DEBUG
-	//debugQueuePrint("StartSleep");
-
-	/*CORE_DEBUG(PSTR("MCO:SLP:MS=%" PRIu32 ",SMS=%" PRIu8 ",I1=%" PRIu8 ",M1=%" PRIu8 ",I2=%" PRIu8
-	                ",M2=%" PRIu8 "\n"), sleepingMS, smartSleep,
-	           interrupt1, mode1, interrupt2, mode2);*/
-
-	if(_fullQueue) {
-		CORE_DEBUG(PSTR("Sleep not possible, queue not empty\n"));
-		return MY_SLEEP_NOT_POSSIBLE;
-	}
 				   
 	// repeater feature: sleeping not possible
 #if defined(MY_REPEATER_FEATURE)
@@ -709,6 +698,11 @@ int8_t _sleep(const uint32_t sleepingMS, const bool smartSleep, const uint8_t in
 #endif // MY_SENSOR_NETWORK
 
 #if defined(MY_SENSOR_NETWORK)
+	if(_fullQueue) {
+		CORE_DEBUG(PSTR("Sleep not possible, queue not empty\n"));
+		return MY_SLEEP_NOT_POSSIBLE;
+	}
+
 	transportDisable();
 #endif
 	setIndication(INDICATION_SLEEP);
@@ -790,7 +784,7 @@ uint32_t getSleepRemaining(void)
 
 void setFullQueue(bool isFull) 
 {
-	CORE_DEBUG(PSTR("Setting _fullQueue to %" PRIu8 " AND RESET\n"), isFull);
+	CORE_DEBUG(PSTR("Setting _fullQueue to %" PRIu8 "\n"), isFull);
 	_fullQueue = isFull;
 }
 
