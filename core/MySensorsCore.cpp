@@ -630,6 +630,8 @@ void doYield(void)
 int8_t _sleep(const uint32_t sleepingMS, const bool smartSleep, const uint8_t interrupt1,
               const uint8_t mode1, const uint8_t interrupt2, const uint8_t mode2)
 {
+	
+	CORE_DEBUG(PSTR("Entering _sleep...\n"));
 	//DEBUG
 	//debugQueuePrint("StartSleep");
 
@@ -788,6 +790,7 @@ uint32_t getSleepRemaining(void)
 
 void setFullQueue(bool isFull) 
 {
+	CORE_DEBUG(PSTR("Setting _fullQueue to %" PRIu8 " AND RESET\n"), isFull);
 	_fullQueue = isFull;
 }
 
