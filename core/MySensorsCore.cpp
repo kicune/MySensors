@@ -638,7 +638,7 @@ int8_t _sleep(const uint32_t sleepingMS, const bool smartSleep, const uint8_t in
 	           interrupt1, mode1, interrupt2, mode2);*/
 
 	if(_fullQueue) {
-		//debugQueuePrint("PreReturn");
+		CORE_DEBUG(PSTR("Sleep not possible, queue not empty\n"));
 		return MY_SLEEP_NOT_POSSIBLE;
 	}
 				   
